@@ -2,7 +2,7 @@
 <div class="relative bg-white" x-data="{mobileMenuOpen: true}">
   <div class="mx-auto px-4 sm:px-6">
 
-    <div class="flex justify-between items-center py-6 md:justify-start md:space-x-10">
+    <div class="block justify-between items-center py-6 md:justify-start md:space-x-10">
 
       <!-- STORE NAME / STORE LOGO md:hidden do the trick-->
       <div class="-mr-2 -my-2 ml-3 md:hidden">
@@ -19,7 +19,7 @@
       </div>
 
       <!-- NAVIGATION MENU -->
-      <nav class="hidden md:flex space-x-10" x-data="{ open:false}">
+      <nav class="hidden md:flex space-x-1" x-data="{ open:false}">
         {% for link in main_menu_linklist %}
           {% if link.links != blank %}
             <div class="relative">
@@ -81,18 +81,18 @@
       </div>
     </div>
   </div>
-  <div class="absolute z-10 top-0 inset-x-0 p-2 transform origin-top-left md:hidden" x-show="mobileMenuOpen">
+  <div class="absolute z-10 top-20 inset-x-0 p-2 transform origin-top-left md:hidden" x-show="mobileMenuOpen">
     <div class="shadow-lg rounded-lg ring-1 ring-black ring-opacity-5 bg-white w-full">
       <div class="p-5 divide-y-2 divide-gray-50">
 
         <!-- MOBILE MENU HEADER TITLE PLUS CLOSE BUTTON -->
-        <div class="flex items-center justify-between pb-3">
+        <div class="flex items-center justify-between pb-1">
           <div>
             <h1 class="text-lg text-gray-500">{{ section.settings.mobile_menu_title }}</h1>
           </div>
           <div class="-mr-2">
             <button
-              class="bg-white rounded-md p-2 text-gray-500"
+              class="bg-white rounded-md p-2 text-red-500"
               type="button"
               x-on:click="mobileMenuOpen = false">
               {% render "icon-close" %}
