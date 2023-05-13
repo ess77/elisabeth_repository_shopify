@@ -2,7 +2,7 @@
 <div class="relative bg-white" x-data="{mobileMenuOpen: true}">
   <div class="mx-auto px-4 sm:px-6">
 
-    <div class="block justify-between items-center py-6 md:justify-start md:space-x-10">
+    <div class="justify-between items-center py-6 md:justify-start md:space-x-10">
 
       <!-- STORE NAME / STORE LOGO md:hidden do the trick-->
       <div class="-mr-2 -my-2 ml-3 md:hidden">
@@ -14,60 +14,60 @@
         </button>
       </div>
 
-      <div class="flex justify-start lg:flex-1 truncate">
-        <h1 class="text-xl font-bold truncate">{{ shop.name }}</h1>
-      </div>
-
-      <!-- NAVIGATION MENU -->
-      <nav class="hidden md:flex space-x-1" x-data="{ open:false}">
-        {% for link in main_menu_linklist %}
-          {% if link.links != blank %}
-            <div class="relative">
-              <button
-                class="inline-flex items-center text-base text-gray-500 hover:text-gray-900"
-                type="button"
-                x-on:click="open = !open">
-                {{ link.title }}
-                {% render "icon-dropdown" %}
-              </button>
+      <div class="justify-start lg:flex-1 truncate">
+        <span class="text-md font-bold truncate">{{ shop.name }}</span>
 
 
-              <!-- STEP 1: Place the div under the button tag -->
+        <!-- NAVIGATION MENU -->
+        <nav class="hidden md:flex space-x-1" x-data="{ open:false}">
+          {% for link in main_menu_linklist %}
+            {% if link.links != blank %}
+              <div class="relative">
+                <button
+                  class="inline-flex items-center text-base text-gray-500 hover:text-gray-900"
+                  type="button"
+                  x-on:click="open = !open">
+                  {{ link.title }}
+                  {% render "icon-dropdown" %}
+                </button>
 
-              <div
-                @click.away="open = false"
-                class="absolute z-10 -ml-5 mt-5 transform px-2 w-screen max-w-md sm:px-0 lg:ml-0 lg:left-1/2 lg:-translate-x-1/2"
-                x-show="open">
 
-                <div class="shadow-lg border ring-black ring-opacity-5 overflow-hidden rounded-lg">
-                  <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
+                <!-- STEP 1: Place the div under the button tag -->
 
-                    {% for childlink in link.links %}
-                      <a class="-m-3 p-3 flex items start rounded-lg hover:bg-gray-100" href="{{ childlink.url }}">
-                        <div class="ml-4">
-                          <p class="text-gray-900 text-base font-medium">
-                            {{ childlink.title }}
-                          </p>
-                        </div>
-                      </a>
-                    {% endfor %}
+                <div
+                  @click.away="open = false"
+                  class="absolute z-10 -ml-5 mt-5 transform px-2 w-screen max-w-md sm:px-0 lg:ml-0 lg:left-1/2 lg:-translate-x-1/2"
+                  x-show="open">
 
+                  <div class="shadow-lg border ring-black ring-opacity-5 overflow-hidden rounded-lg">
+                    <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
+
+                      {% for childlink in link.links %}
+                        <a class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-100" href="{{ childlink.url }}">
+                          <div class="ml-4">
+                            <p class="text-gray-900 text-base font-medium">
+                              {{ childlink.title }}
+                            </p>
+                          </div>
+                        </a>
+                      {% endfor %}
+
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          {% else %}
-            <div class="relative">
-              <a class="text-base text-gray-500 hover:text-gray-900" href="{{ link.url }}">
-                {{ link.title }}
-              </a>
-            </div>
-          {% endif %}
+            {% else %}
+              <div class="relative">
+                <a class="text-base text-gray-500 hover:text-gray-900" href="{{ link.url }}">
+                  {{ link.title }}
+                </a>
+              </div>
+            {% endif %}
 
-        {% endfor %}
+          {% endfor %}
 
-      </nav>
-
+        </nav>
+      </div>
       <div class="hidden md:flex items-center justify-end md:flex-1 space-x-5">
         <a class="whitespace-nowrap text-base text-gray-500 hover:text-gray-900" href="{{ routes.cart_url }}">
           {% render "icon-shopping-bag" %}
