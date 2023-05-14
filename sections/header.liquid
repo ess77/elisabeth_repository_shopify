@@ -1,14 +1,13 @@
 {% assign main_menu_linklist = linklists[section.settings.menu].links %}
-<div class="relative bg-white" x-data="{mobileMenuOpen: true}">
+<div class="relative bg-white">
   <div class="mx-auto px-4 sm:px-6">
     <div class="flex justify-between items-center py-6 md:justify-start md:space-x-10">
 
-      <!-- STORE NAME / STORE LOGO md:hidden do the trick-->
-
-      <div class="justify-start lg:flex-1 truncate">
-        <h1 class="text-xl font-bold truncate">{{ shop.name }}</h1>
-      </div>
+      <!-- STORE NAME / STORE LOGO -->
       <div class="-mr-2 -my-2 ml-3 md:hidden">
+        <div class="justify-start lg:flex-1 truncate">
+          <h1 class="text-xl font-bold truncate">{{ shop.name }}</h1>
+        </div>
         <button
           class="bg-white p-2 inline-flex items-center justify-center focus:outline-none"
           type="button"
@@ -18,8 +17,8 @@
       </div>
 
       <!-- NAVIGATION MENU -->
-      <nav class="hidden md:flex space-x-1" x-data="{ open:false}">
-        {% for link in main_menu_linklist %}
+      <nav class="hidden md:flex space-x-10" x-data="{open: false}">
+        {% for link in linklists.main-menu.links %}
           {% if link.links != blank %}
             <div class="relative">
               <button
@@ -34,15 +33,14 @@
                 @click.away="open = false"
                 class="absolute z-10 -ml-5 mt-5 transform px-2 w-screen max-w-md sm:px-0 lg:ml-0 lg:left-1/2 lg:-translate-x-1/2"
                 x-show="open">
-
                 <div class="shadow-lg border ring-black ring-opacity-5 overflow-hidden rounded-lg">
                   <div class="relative grid gap-1 bg-white px-5 py-6 sm:gap-8 sm:p-8">
+                    {% for sublink in link.links %}
 
-                    {% for childlink in link.links %}
-                      <a class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-100" href="{{ childlink.url }}">
+                      <a class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-100" href="{{sublink.url}}">
                         <div class="ml-4">
                           <p class="text-gray-900 text-base font-medium">
-                            {{ childlink.title }}
+                            {{ sublink.title }}
                           </p>
                         </div>
                       </a>
@@ -51,6 +49,7 @@
                   </div>
                 </div>
               </div>
+
             </div>
           {% else %}
             <div class="relative">
@@ -60,19 +59,21 @@
             </div>
           {% endif %}
         {% endfor %}
+
       </nav>
 
       <div class="hidden md:flex items-center justify-end md:flex-1 space-x-5">
-        <a class="whitespace-nowrap text-base text-gray-500 hover:text-gray-900" href="{{ routes.cart_url }}">
+        <a class="whitespace-nowrap text-base text-gray-500 hover:text-gray-900" href="{{routes.cart_url}}">
           {% render "icon-shopping-bag" %}
         </a>
-
-        {% if shop.customer_accounts_enabled %}
+        {{ shop.customer_accounts_enabled }}
+        {% if shop.customer_accounts_enabled != true %}
           <a class="text-base text-gray-500 hover:text-gray-900" href="{{ routes.account_login_url }}">Login</a>
           <a class="text-base text-gray-500 hover:text-gray-900" href="{{ routes.account_register_url }}">Register</a>
         {% endif %}
       </div>
     </div>
+
     <div class="absolute z-10 top-20 inset-x-0 p-2 transform origin-top-left md:hidden" x-show="mobileMenuOpen">
       <div class="shadow-lg rounded-lg ring-1 ring-black ring-opacity-5 bg-white w-full">
         <div class="p-5 divide-y-2 divide-gray-50">

@@ -1,0 +1,73 @@
+<article>
+  {% for block in section.blocks %}
+    {% case block.type %}
+      {% when "article_title" %}
+      <div class="flex item-center justify-center">
+        <div class="max-w-7xl">
+          <a class="text-base uppersase text-gray-500 hover:text-gray-900 font-bold" href="{{ blog.url }}">{{ blog.title }}</a>
+          <h1 class="text-6xl md:text-6xl font-medium">{{ article.title }}</h1>
+        </div>
+      </div>
+      {% when "article_author" %}
+      {% if section.settings.enable_author %}
+        <small>{{ article.author }}</small>
+      {% endif %}
+      {% when "article_published_date" %}
+      {% if section.settings.enable_published_date %}
+        <time datetime="{{ article.published_at | date: '%d-%m-%y'  }}">{{ article.published_at | date: "%d-%m-%y" }}</time>
+      {% endif %}
+      {% when "featured_image" %}
+      <img alt="{{article.image}}" src="{{article.image|img_url: 'medium'}}">
+      {% when "article_content" %}
+      <div class="">{{ article.content }}</div>
+    {% endcase %}
+  {% endfor %}
+</article>
+
+
+{% schema %}
+  {
+    "name": "Template Article",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_author",
+        "default": true,
+        "label": "Display Author Name"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_published_date",
+        "default": true,
+        "label": "Display Published Date"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "article_title",
+        "name": "Title",
+        "limit": 1
+      },
+      {
+        "type": "article_author",
+        "name": "Author",
+        "limit": 1
+      },
+      {
+        "type": "article_published_date",
+        "name": "Published Date",
+        "limit": 1
+      },
+      {
+        "type": "featured_image",
+        "name": "Thumbnail",
+        "limit": 1
+      },
+      {
+        "type": "article_content",
+        "name": "Content",
+        "limit": 1
+      }
+    ]
+  }
+{% endschema %}
